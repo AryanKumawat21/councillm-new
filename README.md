@@ -271,13 +271,51 @@ The implementation stack can evolve as the project develops.
 
 ---
 
-# 🚀 Getting Started
+# 🚀 Quick Start Guide (Windows)
 
-CounciLLM is currently an evolving project.
+CounciLLM is fully configured for standalone, 100% offline local execution on Windows 10/11 with zero complicated setup steps.
 
-The repository contains the project's architecture, local model workflow, interface, and supporting components. Installation and runtime instructions will be documented here as the project reaches a stable release configuration.
+### 📋 Prerequisites
+- **Operating System:** Windows 10 / 11 (64-bit)
+- **Python:** Python 3.10+ installed and added to `PATH` (no external `pip` dependencies required!)
+- **Hardware Recommended:** 16 GB RAM + modern CPU / Intel Iris Xe, AMD Radeon, or NVIDIA GPU
+- **Free Disk Space:** ~12 GB free (for standalone runtime and GGUF models)
 
-> **Development note:** The exact models, model runtime configuration, hardware requirements, and startup procedure depend on the current development build.
+---
+
+### ⚡ Step 1: Automated Model & Runtime Setup
+Clone the repository and double-click **`SETUP.bat`** (or execute via PowerShell):
+```powershell
+.\setup-models.ps1
+```
+This automated script will:
+1. Download the official **`llama-server.exe`** Vulkan runtime (~35 MB) into `runtime/llama-vulkan-x64/` (supporting Intel Iris Xe and modern GPUs).
+2. Download all 4 verified GGUF council models from HuggingFace directly into `models/`:
+   - 🎯 **Qwen3 Router (1.7B Q6_K):** ~1.6 GB — Intent classification and specialist selection
+   - 🧠 **Qwen3 General (4B Q4_K_M):** ~2.5 GB — Deep reasoning and conversation
+   - 💻 **Granite Coding (3B Q4_K_M):** ~2.1 GB — Code synthesis, debugging, and refactoring
+   - 👁️ **Qwen3 Vision (4B Q4_K_M + MMProj F16):** ~3.3 GB — Multimodal image understanding
+
+---
+
+### 🌐 Step 2: Launch CounciLLM
+Double-click **`START-COUNCILLM.bat`**:
+- Performs automated pre-flight checks.
+- Starts the local sovereign backend on `http://127.0.0.1:8765/`.
+- Opens your default web browser automatically.
+- Keep the launcher window open while chatting.
+
+---
+
+### 🛑 Step 3: Stop CounciLLM
+When finished, either press `Ctrl+C` in the launcher window or double-click **`STOP-COUNCILLM.bat`** to gracefully shut down the server and unload active models from memory.
+
+---
+
+### 🔒 Offline Privacy & Client Authentication
+- **100% Air-Gapped:** Binds strictly to `127.0.0.1` (loopback). No telemetry or internet connectivity required.
+- **Client-Side Account Security:** Local account passwords use client-side PBKDF2 (310,000 iterations) stored in browser `IndexedDB`.
+- **Sequential Memory Management:** Models load on demand and unload sequentially, so your system RAM never exceeds ~4 GB during active inference.
 
 ---
 

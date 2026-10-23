@@ -25,6 +25,8 @@ def port():
 def llama():
  override=os.environ.get('COUNCILLM_LLAMA_SERVER')
  if override and Path(override).is_file(): return Path(override)
+ for candidate in (ROOT.parent.parent.parent/'runtime'/'llama-vulkan-x64'/'llama-server.exe', ROOT/'runtime'/'llama-vulkan-x64'/'llama-server.exe'):
+  if candidate.is_file(): return candidate
  root=Path.home()/'.lmstudio'/'extensions'/'backends'
  # CPU is the reliable default: it avoids competing for GPU memory with other
  # local model processes.  Set COUNCILLM_LLAMA_SERVER to opt into CUDA/Vulkan.
